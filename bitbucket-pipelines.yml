@@ -1,0 +1,28 @@
+# bitbucket-pipelines.yml
+image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+
+pipelines:
+  branches:
+    development:
+      - step:
+          oidc: true
+          name: repo-name
+          deployment: development
+          script:
+            # Configure OS with required settings and packages
+            - source ${BITBUCKET_CLONE_DIR}/pipelineScripts/10-get_google_credentials.sh
+          
+            # Prepare the pipeline
+            - source ${BITBUCKET_CLONE_DIR}/pipelineScripts/20-run_terraform.sh
+
+    master:
+    - step:
+        oidc: true
+        name: repo-name
+        deployment: production
+        script:
+            # Configure OS with required settings and packages
+            - source ${BITBUCKET_CLONE_DIR}/pipelineScripts/10-get_google_credentials.sh
+          
+            # Prepare the pipeline
+            - source ${BITBUCKET_CLONE_DIR}/pipelineScripts/20-run_terraform.sh

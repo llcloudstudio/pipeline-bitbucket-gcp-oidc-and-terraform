@@ -1,0 +1,2 @@
+# this file used by pip to install python dependancies
+requests
